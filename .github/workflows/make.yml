@@ -1,0 +1,71 @@
+# Make executable files for multiple operating systems using Nuitka
+# ref: https://nuitka.net/doc/user-manual.html#use-case-7-building-with-github-workflows
+name: make
+
+on:
+  workflow_dispatch:
+    inputs:
+      scriptname:
+        description: 'Path to python script to generate executable of'
+        required: true
+        default: 'src/ezsam/gui/app.py'
+      name:
+        description: 'Name of generated executable'
+        required: true
+        default: ezsam
+      version:
+        description: 'Semantic version string, must be integers x.y.z'
+        required: true
+        default: 0.0.0
+      description:
+        description: 'Description embedded in executable'
+        required: true
+        default:  'ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
+
+concurrency:
+  group: 'make'
+  cancel-in-progress: true
+
+jobs:
+  make-executable:
+    timeout-minutes: 180
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Check-out repository
+        uses: actions/checkout@v3
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+          architecture: 'x64'
+          cache: 'pip'
+          cache-dependency-path: |
+            **/requirements*.txt
+      - name: Install your Dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Build Executable with Nuitka
+        uses: Nuitka/Nuitka-Action@main
+        with:
+          # ref: https://github.com/Nuitka/Nuitka-Action/blob/main/action.yml
+          nuitka-version: main
+          enable-plugins: tk-inter
+          onefile: true
+          onefile-tempdir-spec: '{TEMP}/ezsam'
+          include-data-dir: src/ezsam/gui/assets=src/ezsam/gui/assets
+          product-name: ${{ github.event.inputs.name }}
+          product-version: ${{ github.event.inputs.version }}
+          file-version: ${{ github.event.inputs.version }}
+          file-description: ${{ github.event.inputs.description }}
+          output-dir: dist
+          script-name: ${{ github.event.inputs.scriptname }}
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ runner.os }} executable build
+          path: |
+            dist/*.exe
+            dist/*.bin
