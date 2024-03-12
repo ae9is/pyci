@@ -75,7 +75,9 @@ jobs:
           if [ "$RUNNER_OS" == "Linux" ]; then
             chmod +x dist/*.bin
             mv dist/*.bin dist/${{ github.event.inputs.name }}
-            tar -cvf ${{ github.event.inputs.name }}.tar dist/${{ github.event.inputs.name }}
+            cd dist
+            tar -cvf ${{ github.event.inputs.name }}.tar ${{ github.event.inputs.name }}
+            cd ..
           elif [ "$RUNNER_OS" == "Windows" ]; then
             mv dist/*.exe dist/${{ github.event.inputs.name }}.exe
           else
