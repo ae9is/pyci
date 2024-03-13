@@ -32,7 +32,7 @@ fi
 tempdir="{TEMP}/${name}"
 outfile="${name}-${version}.bin"
 echo "Creating ${name}-${version} at `date` ..."
-python -m nuitka --enable-plugin=tk-inter --onefile \
+python -m nuitka --enable-plugin=tk-inter --onefile --assume-yes-for-downloads \
   --onefile-tempdir-spec="${tempdir}" \
   --include-data-dir="${assets}=${assets}" \
   --output-filename="${outfile}" \
