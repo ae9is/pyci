@@ -8,11 +8,13 @@ on:
       scriptname:
         description: 'Path to python script to generate executable of'
         required: true
-        default: 'src/ezsam/gui/app.py'
+        default: 'tests/nuitka-test-advanced.py'
+#        default: 'src/ezsam/gui/app.py'
       name:
         description: 'Name of generated executable'
         required: true
-        default: ezsam
+        default: ntestadv
+#        default: ezsam
       version:
         description: 'Semantic version string, must be integers x.y.z'
         required: true
@@ -20,7 +22,8 @@ on:
       description:
         description: 'Description embedded in executable'
         required: true
-        default:  'ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
+        default:  'Test building executable with Nuitka'
+#        default:  'ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
       datadir:
         description: 'Directory containing assets to embed into the executable'
         required: true
@@ -29,7 +32,8 @@ on:
         description: 'Run workflow on all supported platforms'
         required: true
         type: boolean
-        default: true
+        default: false
+#        default: true
       platform:
         description: 'Single platform to use if not all platforms'
         required: true
