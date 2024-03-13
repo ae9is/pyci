@@ -1,5 +1,11 @@
 #!/bin/bash
 # Create executable from python project using Nuitka
+echo "Got arguments:"
+for arg in "$@"
+do
+  echo "${arg}"
+done
+exit 1
 name="${1}"
 entrypoint="${2}"
 version="${3}"
