@@ -3,6 +3,9 @@
 name="${1}"
 entrypoint="${2}"
 version="${3}"
+assets="${4}"
+description="${5}"
+dist="${6}"
 if [ -z "${name}" ]; then
   name="ezsam"
 fi
@@ -12,10 +15,16 @@ fi
 if [ -z "${version}" ]; then
   version="0.0.0"
 fi
-assets="src/ezsam/gui/assets"
-description='ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
-dist="dist-nuitka"
-tempdir="{TEMP}/ezsam"
+if [ -z "${assets}" ]; then
+  assets="src/ezsam/gui/assets"
+fi
+if [ -z "${description}" ]; then
+  description='ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
+fi
+if [ -z "${dist}" ]; then
+  dist="dist-nuitka"
+fi
+tempdir="{TEMP}/${name}"
 outfile="${name}-${version}.bin"
 echo "Creating ${name}-${version} at `date` ..."
 python -m nuitka --enable-plugin=tk-inter --onefile \
