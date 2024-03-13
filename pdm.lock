@@ -5,7 +5,7 @@
 groups = ["default", "cli", "dev", "gui", "make"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:b602cd6656e022d25ed68d8a52ec55ba9dd8dba1cae645047d4943c749580170"
+content_hash = "sha256:2e933d91c0aca4105470c85e91fba9432e361cb5a05fa16a29ef81d2a4470e77"
 
 [[package]]
 name = "addict"

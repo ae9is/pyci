@@ -120,9 +120,6 @@ make = [
     "pyinstaller>=6.5.0",
     "nuitka>=2.1.1",
 ]
-make-win = [
-    "py2exe>=0.13.0.1",
-]
 
 [tool.pdm.build]
 excludes = ["./**/.git"]
