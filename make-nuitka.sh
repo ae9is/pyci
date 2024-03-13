@@ -30,7 +30,7 @@ if [ -z "${description}" ]; then
   description='ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
 fi
 tempdir="{TEMP}/${name}"
-outfile="${name}-${version}.bin"
+outfile="${name}"
 echo "Creating ${name}-${version} at `date` ..."
 python -m nuitka --enable-plugin=tk-inter --onefile --assume-yes-for-downloads \
   --onefile-tempdir-spec="${tempdir}" \
@@ -40,8 +40,20 @@ python -m nuitka --enable-plugin=tk-inter --onefile --assume-yes-for-downloads \
   --file-version="${version}" \
   --file-description="${description}" \
   --output-dir="${dist}" "${entrypoint}"
+# Move onefile executable to different folder and checksum
 cd "${dist}"
-# Note: Nuitka default compression almost as good as 7z
+mkdir -p "onefile"
+mv "${outfile}" "onefile/${outfile}"
+cd onefile
 sha256sum "${outfile}" > "${outfile}.sha256"
+cd ..
+base=`basename ${entrypoint} .py`
+# Create standalone folder archive and checksum
+outdir="${name}-${version}"
+mv "${base}.dist" "${outdir}"
+zip -r "${outdir}.zip" "${outdir}"
+sha256sum "${outdir}.zip" > "${outdir}.zip.sha256"
+# Now that we have our archive undo move to prevent future runs of Nuikta from failing
+mv "${outdir}" "${base}.dist" 
 cd ..
 echo "Finished creating ${name}-${version} at `date`"
