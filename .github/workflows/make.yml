@@ -104,14 +104,7 @@ jobs:
         with:
           name: ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}-${{ runner.os }}
           path: |
-            dist/*.zip
-          compression-level: 0
-      - name: Upload standalone archive checksum
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}-${{ runner.os }}-checksum
-          path: |
-            dist/*.sha256
+            dist/${{ github.event.inputs.name }}-${{ github.event.inputs.version }}/
           compression-level: 0
       - name: Upload onefile executable
         uses: actions/upload-artifact@v4

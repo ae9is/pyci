@@ -11,6 +11,7 @@ version="${3}"
 dist="${4}"
 assets="${5}"
 description="${6}"
+CI="${7}"
 if [ -z "${name}" ]; then
   name="ezsam"
 fi
@@ -48,12 +49,15 @@ cd onefile
 sha256sum "${outfile}" > "${outfile}.sha256"
 cd ..
 base=`basename ${entrypoint} .py`
-# Create standalone folder archive and checksum
+# In CI, we will zip upload the renamed standalone output directory
 outdir="${name}-${version}"
 mv "${base}.dist" "${outdir}"
-zip -r "${outdir}.zip" "${outdir}"
-sha256sum "${outdir}.zip" > "${outdir}.zip.sha256"
-# Now that we have our archive undo move to prevent future runs of Nuikta from failing
-mv "${outdir}" "${base}.dist" 
+if [ ! -z "${CI}" ]; then
+  # For local builds we have zip and want to just directly create a useful archive and checksum
+  zip -r "${outdir}.zip" "${outdir}"
+  sha256sum "${outdir}.zip" > "${outdir}.zip.sha256"
+  # Now that we have our archive undo move to prevent future runs of Nuikta from failing
+  mv "${outdir}" "${base}.dist" 
+fi
 cd ..
 echo "Finished creating ${name}-${version} at `date`"
