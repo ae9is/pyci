@@ -62,9 +62,23 @@ jobs:
         uses: actions/checkout@v4
       - name: Setup pdm
         uses: pdm-project/setup-pdm@v4
+      - name: Restore cached venv
+        id: cache-venv-restore
+        uses: actions/cache/restore@v4
+        with:
+          path: |
+            .venv
+          key: ${{ runner.os }}-venv
       - name: Install dependencies
         run: |
           pdm install-all
+      - name: Save venv to cache
+        id: cache-venv-save
+        uses: actions/cache/save@v4
+        with:
+          path: |
+            .venv
+          key: ${{ steps.cache-venv-restore.outputs.cache-primary-key }}
       - name: Build executable with Nuitka
         run: >
           pdm make-nuitka 
