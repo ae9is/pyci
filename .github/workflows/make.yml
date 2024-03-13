@@ -76,12 +76,12 @@ jobs:
           dist
       - name: Fix executable
         # Rename executable from script name to desired name.
-        # Remove .bin extension and preserve permissions on Linux.
+        # Preserve executable permissions on Linux.
         # ref: https://github.com/actions/upload-artifact?tab=readme-ov-file#permission-loss
         # ref: https://stackoverflow.com/a/57948488
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
-            chmod +x dist/*.bin
+            chmod +x dist/*
             mv dist/*.bin dist/${{ github.event.inputs.name }}
             cd dist
             tar -cvf ${{ github.event.inputs.name }}.tar ${{ github.event.inputs.name }}
