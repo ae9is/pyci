@@ -5,13 +5,12 @@ for arg in "$@"
 do
   echo "${arg}"
 done
-exit 1
 name="${1}"
 entrypoint="${2}"
 version="${3}"
-assets="${4}"
-description="${5}"
-dist="${6}"
+dist="${4}"
+assets="${5}"
+description="${6}"
 if [ -z "${name}" ]; then
   name="ezsam"
 fi
@@ -21,14 +20,14 @@ fi
 if [ -z "${version}" ]; then
   version="0.0.0"
 fi
+if [ -z "${dist}" ]; then
+  dist="dist-nuitka"
+fi
 if [ -z "${assets}" ]; then
   assets="src/ezsam/gui/assets"
 fi
 if [ -z "${description}" ]; then
   description='ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
-fi
-if [ -z "${dist}" ]; then
-  dist="dist-nuitka"
 fi
 tempdir="{TEMP}/${name}"
 outfile="${name}-${version}.bin"

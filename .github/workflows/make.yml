@@ -80,14 +80,10 @@ jobs:
             .venv
           key: ${{ steps.cache-venv-restore.outputs.cache-primary-key }}
       - name: Build executable with Nuitka
-        run: >
-          pdm make-nuitka 
-          ${{ github.event.inputs.name }}
-          ${{ github.event.inputs.scriptname }}
-          ${{ github.event.inputs.version }}
-          ${{ github.event.inputs.datadir }}
-          ${{ github.event.inputs.description }}
-          dist
+        run: |
+          pdm make-nuitka "${{ github.event.inputs.name }}" "${{ github.event.inputs.scriptname }}" \
+            "${{ github.event.inputs.version }}" dist \
+            "${{ github.event.inputs.datadir }}" "${{ github.event.inputs.description }}"
       - name: Fix executable
         # Rename executable from script name to desired name.
         # Preserve executable permissions on Linux.
