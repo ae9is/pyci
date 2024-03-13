@@ -26,7 +26,7 @@ python -m nuitka --enable-plugin=tk-inter --onefile \
   --file-version="${version}" \
   --file-description="${description}" \
   --output-dir="${dist}" "${entrypoint}"
-cd dist
+cd "${dist}"
 # Note: Nuitka default compression almost as good as 7z
 sha256sum "${outfile}" > "${outfile}.sha256"
 cd ..
