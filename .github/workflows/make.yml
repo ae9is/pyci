@@ -113,7 +113,7 @@ jobs:
           path: |
             dist/*.sha256
           compression-level: 0
-      - name: Upload standalone archive
+      - name: Upload onefile executable
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}-${{ runner.os }}-onefile
@@ -121,7 +121,7 @@ jobs:
             dist/onefile/*.tar
             dist/onefile/*.exe
           compression-level: 0
-      - name: Upload standalone archive
+      - name: Upload onefile executable checksum
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}-${{ runner.os }}-onefile-checksum
