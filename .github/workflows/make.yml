@@ -72,6 +72,7 @@ jobs:
       - name: Install dependencies
         run: |
           pdm install-all
+        shell: bash
       - name: Save venv to cache
         id: cache-venv-save
         uses: actions/cache/save@v4
@@ -84,6 +85,7 @@ jobs:
           pdm make-nuitka "${{ github.event.inputs.name }}" "${{ github.event.inputs.scriptname }}" \
             "${{ github.event.inputs.version }}" dist \
             "${{ github.event.inputs.datadir }}" "${{ github.event.inputs.description }}"
+        shell: bash
       - name: Fix executable
         # Rename executable from script name to desired name.
         # Preserve executable permissions on Linux.
@@ -110,3 +112,4 @@ jobs:
           path: |
             dist/*.exe
             dist/*.tar
+            dist/*.sha256
