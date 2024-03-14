@@ -103,6 +103,7 @@ jobs:
       - name: Log build folder contents and size
         run: |
           du -h dist
+          ls dist/*
       - name: Save build to cache
         if: steps.cache-build-restore.outputs.cache-hit != 'true'
         id: cache-build-save
