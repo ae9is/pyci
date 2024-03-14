@@ -100,6 +100,9 @@ jobs:
             "${{ github.event.inputs.version }}" dist \
             "${{ github.event.inputs.datadir }}" "${{ github.event.inputs.description }} ci"
         shell: bash
+      - name: Log build folder contents and size
+        run: |
+          du -h dist
       - name: Save build to cache
         if: steps.cache-build-restore.outputs.cache-hit != 'true'
         id: cache-build-save
@@ -108,9 +111,6 @@ jobs:
           path: |
             dist
           key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
-      - name: Log dist folder contents and size
-        run: |
-          du -h dist
       - name: Fix executable
         # Preserve executable permissions on Linux.
         # ref: https://github.com/actions/upload-artifact?tab=readme-ov-file#permission-loss
