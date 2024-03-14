@@ -30,7 +30,7 @@ fi
 if [ -z "${description}" ]; then
   description='ezsam is a tool to extract objects from images or video via text prompt - info at https://www.ezsam.org'
 fi
-tempdir="{TEMP}/${name}"
+tempdir="{TEMP}/ezsam"  # Should match ezsam.lib.config.EXECUTABLE_NAME
 outfile="${name}"
 echo "Creating ${name}-${version} at `date` ..."
 python -m nuitka --enable-plugin=tk-inter --onefile --assume-yes-for-downloads \
