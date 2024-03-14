@@ -101,7 +101,7 @@ jobs:
         run: |
           pdm make-nuitka "${{ github.event.inputs.name }}" "${{ github.event.inputs.scriptname }}" \
             "${{ github.event.inputs.version }}" dist \
-            "${{ github.event.inputs.datadir }}" "${{ github.event.inputs.description }} ci"
+            "${{ github.event.inputs.datadir }}" "${{ github.event.inputs.description }}" ci
         shell: bash
       - name: Log build folder contents and size
         run: |
