@@ -1,10 +1,5 @@
 #!/bin/bash
 # Create executable from python project using Nuitka
-echo "Got arguments:"
-for arg in "$@"
-do
-  echo "${arg}"
-done
 name="${1}"
 entrypoint="${2}"
 version="${3}"
@@ -49,15 +44,19 @@ cd onefile
 sha256sum "${outfile}" > "${outfile}.sha256"
 cd ..
 base=`basename ${entrypoint} .py`
-# In CI, we will zip upload the renamed standalone output directory
 outdir="${name}-${version}"
-mv "${base}.dist" "${outdir}"
-if [ ! -z "${CI}" ]; then
-  # For local builds we have zip and want to just directly create a useful archive and checksum
+mv "${base}.dist" "${outdir}"  # outdir will be zipped up in CI automatically
+if [ -z "${CI}" ]; then
+  # No CI flag, running locally.
+  # We have zip executable locally and want to just directly create a useful archive and checksum.
   zip -r "${outdir}.zip" "${outdir}"
   sha256sum "${outdir}.zip" > "${outdir}.zip.sha256"
   # Now that we have our archive undo move to prevent future runs of Nuikta from failing
   mv "${outdir}" "${base}.dist" 
+else
+  # In CI, clean up build directories to save space
+  rm -rf "${base}.build"
+  rm -rf "${base}.onefile-build"
 fi
 cd ..
 echo "Finished creating ${name}-${version} at `date`"
