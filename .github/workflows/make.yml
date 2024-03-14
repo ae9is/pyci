@@ -108,6 +108,9 @@ jobs:
           path: |
             dist
           key: ${{ steps.cache-build-restore.outputs.cache-primary-key }}
+      - name: Log dist folder contents and size
+        run: |
+          du -h dist
       - name: Fix executable
         # Preserve executable permissions on Linux.
         # ref: https://github.com/actions/upload-artifact?tab=readme-ov-file#permission-loss
