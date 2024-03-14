@@ -122,10 +122,10 @@ jobs:
         run: |
           if [ "$RUNNER_OS" == "Linux" ]; then
             cd dist
-            tar -cvf ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}.tar ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}
+            tar -cf ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}.tar ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}
             rm -rf ${{ github.event.inputs.name }}-${{ github.event.inputs.version }}
             cd onefile
-            tar -cvf ${{ github.event.inputs.name }}.tar ${{ github.event.inputs.name }}
+            tar -cf ${{ github.event.inputs.name }}.tar ${{ github.event.inputs.name }}
             rm -rf ${{ github.event.inputs.name }}
             cd ../..
           elif [ "$RUNNER_OS" == "Windows" ]; then
