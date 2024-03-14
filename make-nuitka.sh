@@ -33,7 +33,7 @@ fi
 tempdir="{TEMP}/ezsam"  # Should match ezsam.lib.config.EXECUTABLE_NAME
 outfile="${name}"
 echo "Creating ${name}-${version} at `date` ..."
-python -m nuitka --enable-plugin=tk-inter --onefile --assume-yes-for-downloads \
+python -m nuitka --enable-plugin=tk-inter --onefile --assume-yes-for-downloads --disable-console \
   --onefile-tempdir-spec="${tempdir}" \
   --include-data-dir="${assets}=${assets}" \
   --output-filename="${outfile}" \
